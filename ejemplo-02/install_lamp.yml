@@ -1,0 +1,21 @@
+---
+- name: Playbook para instalar la pila LAMP
+  hosts: aws
+  become: yes
+
+  tasks:
+
+    - name: Actualizar los repositorios
+      shell: apt update
+
+    - name: Instalar el servidor web Apache
+      shell: apt install apache2 -y
+
+    - name: Instalar el sistema gestor de bases de datos MySQL
+      shell: apt install mysql-server -y
+
+    - name: Instalar PHP
+      shell: apt install php libapache2-mod-php php-mysql -y
+
+    - name: Reiniciar el servicio de Apache
+      shell: systemctl restart apache2
