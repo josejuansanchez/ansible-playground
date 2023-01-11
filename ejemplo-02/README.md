@@ -1,4 +1,4 @@
-# Ejemplo 2
+# Ejemplo 2
 
 Este ejemplo muestra la **instalación de la pila LAMP** utilizando el módulo [`command`][1].
 
