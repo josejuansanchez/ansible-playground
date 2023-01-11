@@ -11,8 +11,8 @@ Repositorio para hacer experimentos con Ansible.
 - [Ejemplo 07](ejemplo-07/README.md). Módulos  [`mysql_db`][6] y [`mysql_user`][7].
 - [Ejemplo 08](ejemplo-08/README.md). Despliegue de phpMyAdmin.
 - [Ejemplo 09](ejemplo-09/README.md). Despliegue de una aplicación LAMP sencilla.
-- [Ejemplo 10](ejemplo-10/README.md).
-- [Ejemplo 11](ejemplo-11/README.md).
+- [Ejemplo 10](ejemplo-10/README.md). Ejecución condicional de tareas (Incompleto).
+- [Ejemplo 11](ejemplo-11/README.md). Uso de roles (Incompleto).
 
 [1]: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
 [2]: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
