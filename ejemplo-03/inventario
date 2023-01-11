@@ -1,0 +1,8 @@
+[aws]
+34.226.122.155
+44.206.245.114
+
+[all:vars]
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/home/josejuan/Lab/vockey.pem
+ansible_ssh_common_args='-o StrictHostKeyChecking=accept-new'
