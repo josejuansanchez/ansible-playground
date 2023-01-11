@@ -1,6 +1,6 @@
 # ansible-playground
 
-Repositorio para hacer experimentos con Ansible.
+Repositorio para hacer experimentos con _playbooks_ de Ansible.
 
 - [Ejemplo 01](ejemplo-01/README.md). Módulo [`command`][1].
 - [Ejemplo 02](ejemplo-02/README.md). Módulo [`shell`][2].
@@ -13,6 +13,10 @@ Repositorio para hacer experimentos con Ansible.
 - [Ejemplo 09](ejemplo-09/README.md). Despliegue de una aplicación LAMP sencilla.
 - [Ejemplo 10](ejemplo-10/README.md). Ejecución condicional de tareas (Incompleto).
 - [Ejemplo 11](ejemplo-11/README.md). Uso de roles (Incompleto).
+
+[1]: https://docs.aws.amazon.com/es_es/cli/index.html
+[2]: https://josejuansanchez.org/iaw/practica-aws-cli/index.html
+[3]: https://josejuansanchez.org/iaw/
 
 [1]: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
 [2]: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
