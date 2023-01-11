@@ -1,0 +1,85 @@
+---
+- name: Playbook para hacer el deploy de una aplicación web
+  hosts: aws
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Instalamos el gestor de paquetes de Python pip3
+      apt: 
+        name: python3-pip
+        state: present
+
+    - name: Instalamos el módulo de pymysql
+      pip:
+        name: pymysql
+        state: present
+
+    - name: Crear una base de datos
+      mysql_db:
+        name: "{{ db.name }}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+
+    - name: Crear el usuario de la base de datos
+      mysql_user:         
+        name: "{{ db.user }}"
+        password: "{{ db.password }}"
+        priv: "{{ db.name }}.*:ALL"
+        #host: "%"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+
+    - name: Descargar el código fuente de GitHub
+      git:
+        repo: https://github.com/josejuansanchez/iaw-practica-lamp.git
+        dest: /tmp/iaw-practica-lamp
+        force: yes
+        update: yes
+
+    - name: Copiar el código fuente
+      copy:
+        src: /tmp/iaw-practica-lamp/src/
+        dest: /var/www/html
+        remote_src: yes
+        mode: 0755
+
+    - name: Editar el nombre de la base de datos en el archivo de configuración
+      replace:
+        path: /var/www/html/config.php
+        regexp: "lamp_db"
+        replace: "{{ db.name }}"
+
+    - name: Editar el usuario de la base de datos en el archivo de configuración
+      replace:
+        path: /var/www/html/config.php
+        regexp: "lamp_user"
+        replace: "{{ db.user }}"
+
+    - name: Editar el password del usuario de la base de datos en el archivo de configuración
+      replace:
+        path: /var/www/html/config.php
+        regexp: "lamp_password"
+        replace: "{{ db.password }}"
+
+    - name: Importar la base de datos
+      mysql_db:
+        name: "{{ db.name }}"
+        state: import
+        target: /tmp/iaw-practica-lamp/db/database.sql 
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+
+    - name: Eliminar el directorio iaw-practica-lamp
+      file:
+        path: /tmp/iaw-practica-lamp
+        state: absent
+
+    - name: Cambiar el propietario del directorio /var/www/html
+      file:
+        path: /var/www/html
+        owner: www-data
+        group: www-data
+        recurse: yes

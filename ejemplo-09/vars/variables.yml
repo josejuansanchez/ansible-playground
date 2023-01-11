@@ -1,0 +1,9 @@
+- db:
+    name: lamp_db
+    user: lamp_user
+    password: lamp_password
+
+- phpmyadmin:
+    user: pma_user
+    password: pma_password
+    db_name: db_name

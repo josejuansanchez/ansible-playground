@@ -1,0 +1,39 @@
+---
+- name: Playbook para configurar MySQL
+  hosts: aws
+  become: yes
+
+  vars:
+    - db_name: db_name
+    - db_user: db_user
+    - db_password: db_password
+
+  tasks:
+
+    # Para utilizar el módulo mysql_db necesitamos tener instalado el paquete python3-mysqldb
+    - name: Instalamos el gestor de paquetes de Python pip3
+      apt: 
+        name: python3-pip
+        state: present
+
+    - name: Instalamos el módulo de pymysql
+      pip:
+        name: pymysql
+        state: present
+
+    - name: Crear una base de datos
+      mysql_db:
+        name: "{{ db_name }}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+
+    # El parámetro 'no_log: true' lo utilizamos para ocultar información de salida
+    - name: Crear el usuario de la base de datos
+      no_log: true
+      mysql_user:         
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        priv: "{{ db_name }}.*:ALL"
+        #host: "%"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock 

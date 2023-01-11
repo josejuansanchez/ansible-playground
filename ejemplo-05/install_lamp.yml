@@ -1,0 +1,34 @@
+---
+- name: Playbook para instalar la pila LAMP
+  hosts: aws
+  become: yes
+
+  # Variables definidas en un archivo externo
+  vars_files:
+    - vars/variables.yml
+
+  tasks:
+
+    - name: Actualizar los repositorios
+      apt:
+        update_cache: yes
+
+    - name: Instalar el servidor web Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Instalar el sistema gestor de bases de datos MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Instalar PHP y los módulos necesarios
+      apt:
+        name: "{{ php_packages }}"
+        state: present
+
+    - name: Reiniciar el servidor web Apache
+      service:
+        name: apache2
+        state: restarted
