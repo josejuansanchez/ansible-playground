@@ -30,7 +30,7 @@ Ejemplo:
 44.206.245.114
 
 [all:vars]
-ansible_user=ubuntuhttps://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
+ansible_user=ubuntu
 ansible_ssh_private_key_file=/home/josejuan/Lab/vockey.pem
 ```
 
