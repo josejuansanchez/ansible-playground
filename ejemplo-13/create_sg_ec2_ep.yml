@@ -1,0 +1,57 @@
+---
+- name: Playbook para crear un grupo de seguridad, una instancia EC2 y una IP elástica en AWS
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    ec2_security_group: sg_ejemplo_13
+    ec2_security_group_description: Grupo de seguridad del ejemplo 13
+    ec2_instance_name: instancia_ejemplo_13
+    ec2_image: ami-06878d265978313ca
+    ec2_instance_type: t2.small
+    ec2_key_name: vockey
+
+  tasks:
+  - name: Crear un grupo de seguridad
+    ec2_group:
+      name: "{{ ec2_security_group }}"
+      description: "{{ ec2_security_group_description }}"
+      rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+    register: security_group
+
+  - name: Crear una instancia EC2
+    ec2_instance:
+      name: "{{ ec2_instance_name }}"
+      key_name: "{{ ec2_key_name }}"
+      security_group: "{{ ec2_security_group }}"
+      instance_type: "{{ ec2_instance_type }}"
+      image_id: "{{ ec2_image }}"
+      count: 1
+      state: running
+    register: ec2
+
+  # - name: Mostramos el contenido de la variable ec2
+  #   debug:
+  #     msg: "ec2: {{ ec2 }}"
+
+  - name: Crear una nueva IP elástica y asociar a la instancia
+    ec2_eip:
+      device_id: "{{ ec2.instances[0].instance_id }}"
+    register: eip
+
+  - name: Mostrar la IP elástica
+    debug:
+      msg: "La IP elástica es: {{ eip.public_ip }}"

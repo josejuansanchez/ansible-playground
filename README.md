@@ -14,6 +14,11 @@ Repositorio para hacer experimentos con _playbooks_ de Ansible.
 - [Ejemplo 10](ejemplo-10/README.md). Ejecución condicional de tareas (Incompleto).
 - [Ejemplo 11](ejemplo-11/README.md). Uso de roles (Incompleto).
 
+Ejemplos de Infraestructura como Código (IaC) en AWS.
+
+- [Ejemplo 12](ejemplo-12/README.md). Creación de un grupo de seguridad y una instancia EC2.
+- [Ejemplo 13](ejemplo-13/README.md). Creación y borrado de un grupo de seguridad, una instancia EC2 y una IP elástica.
+
 [1]: https://docs.aws.amazon.com/es_es/cli/index.html
 [2]: https://josejuansanchez.org/iaw/practica-aws-cli/index.html
 [3]: https://josejuansanchez.org/iaw/
