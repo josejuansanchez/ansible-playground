@@ -39,7 +39,6 @@
       security_group: "{{ ec2_security_group }}"
       instance_type: "{{ ec2_instance_type }}"
       image_id: "{{ ec2_image }}"
-      count: 1
       state: running
     register: ec2
 
