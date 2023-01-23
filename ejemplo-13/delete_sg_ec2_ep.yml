@@ -5,8 +5,8 @@
   gather_facts: false
 
   vars:
-    ec2_security_group: sg_ejemplo_12
-    ec2_instance_name: instancia_ejemplo_12
+    ec2_security_group: sg_ejemplo_13
+    ec2_instance_name: instancia_ejemplo_13
 
   tasks:
 
