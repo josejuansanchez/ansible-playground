@@ -1,0 +1,65 @@
+---
+- name: Playbook para hacer el deploy de la aplicación web PrestaShop
+  hosts: frontend
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Descargar el código fuente de PrestaShop
+      get_url:
+        url: https://github.com/PrestaShop/PrestaShop/releases/download/8.0.1/prestashop_8.0.1.zip
+        dest: /tmp
+        mode: 0755
+
+    - name: Instalar unzip
+      apt: 
+        name: unzip
+        state: present
+
+    - name: Descomprimir el paquete de PrestaShop
+      unarchive:
+        src: /tmp/prestashop_8.0.1.zip
+        dest: /tmp/
+        remote_src: true
+        
+    - name: Descomprimir el código fuente de PrestaShop
+      unarchive:
+        src: /tmp/prestashop.zip
+        dest: /var/www/html/
+        remote_src: yes
+
+    - name: Modificamos los permisos del directorio /var/www/html
+      file:
+        path: /var/www/html
+        owner: www-data
+        group: www-data
+        recurse: yes
+        mode: 0755
+        
+    - name: Instalar PrestaShop desde PHP CLI
+      command:
+        php index_cli.php \
+        --language={{ prestashop.language }} \
+        --name={{ prestashop.name }} \
+        --country={{ prestashop.country }} \
+        --ssl={{ prestashop.ssl }} \
+        --firstname={{ prestashop.firstname }} \
+        --lastname={{ prestashop.lastname }} \
+        --email={{ prestashop.email }} \
+        --password={{ prestashop.password }} \
+        --db_server={{ prestashop.db_server }} \
+        --db_name={{ db.name }} \
+        --db_user={{ db.user }} \
+        --db_password={{ db.password }} \
+        --domain={{ prestashop.domain }}
+      args:
+        chdir: /var/www/html/install
+      
+    - name: Eliminar el directorio de instalación
+      file:
+        path: /var/www/html/install
+        state: absent
+

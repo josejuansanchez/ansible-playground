@@ -1,0 +1,21 @@
+db:
+    name: prestashop_db
+    user: prestashop_user
+    password: prestashop_password
+
+prestashop:
+    language: es
+    name: DAW
+    country: es
+    ssl: 0
+    firstname: Nombre
+    lastname: Apellidos
+    email: usuario@email.es
+    password: p4SSw0rd123456
+    db_server: 54.146.230.242
+    domain: 18.211.248.235
+
+phpmyadmin:
+    user: pma_user
+    password: pma_password
+    db_name: db_name
