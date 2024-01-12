@@ -1,0 +1,72 @@
+---
+- name: Playbook para instalar herramientas adicionales
+  hosts: aws
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Descargar phpMyAdmin
+      get_url:
+        url: https://files.phpmyadmin.net/phpMyAdmin/5.2.0/phpMyAdmin-5.2.0-all-languages.zip
+        dest: /tmp/phpMyAdmin-5.2.0-all-languages.zip
+
+    - name: Instalar unzip
+      apt:
+        name: unzip
+        state: present
+
+    - name: Descomprimir phpMyAdmin
+      unarchive:
+        src: /tmp/phpMyAdmin-5.2.0-all-languages.zip
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Copiar phpMyAdmin
+      copy:
+        src: /tmp/phpMyAdmin-5.2.0-all-languages/
+        dest: /var/www/html/phpmyadmin
+        remote_src: yes
+        mode: 0755
+
+    - name: Cambiar el propietario y el grupo de phpMyAdmin
+      file:
+        path: /var/www/html/phpmyadmin
+        state: directory
+        owner: www-data
+        group: www-data
+        recurse: yes
+
+    # Para utilizar el módulo mysql_db necesitamos tener instalado el paquete python3-mysqldb.
+    - name: Instalar pip3
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Instalar PyMySQL
+      pip:
+        name: pymysql
+        state: present
+
+    - name: Crear la base de datos para phpMyAdmin
+      mysql_db:
+        name: "{{ phpmyadmin.db_name }}"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Importar la base de datos de phpMyAdmin
+      mysql_db:
+        name: "{{ phpmyadmin.db_name }}"
+        state: import
+        target: /var/www/html/phpmyadmin/sql/create_tables.sql
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Crear el usuario de phpMyAdmin
+      mysql_user:
+        name: "{{ phpmyadmin.user }}"
+        password: "{{ phpmyadmin.password }}"
+        priv: "{{ phpmyadmin.db_name }}.*:ALL"
+        state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
