@@ -62,3 +62,11 @@
       file:
         path: /var/www/html/install
         state: absent
+
+    - name: Cambiar el propietario y el grupo del directorio /var/www/html
+      file:
+        path: /var/www/html/
+        state: directory
+        owner: www-data
+        group: www-data
+        recurse: yes

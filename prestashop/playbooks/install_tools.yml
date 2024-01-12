@@ -1,6 +1,6 @@
 ---
 - name: Playbook para instalar herramientas adicionales
-  hosts: aws
+  hosts: frontend
   become: yes
 
   vars_files:
