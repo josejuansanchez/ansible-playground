@@ -26,7 +26,7 @@
         --agree-tos \
         --no-eff-email \
         --non-interactive \
-        -d {{ prestashop.domain }}
+        -d {{ certbot.domain }}
 
 
   

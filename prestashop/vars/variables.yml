@@ -13,10 +13,10 @@ prestashop:
     email: usuario@email.es
     password: p4SSw0rd123456
     db_server: 54.146.230.242
-    domain: prestashop-daw.ddns.net
 
 certbot:
     email: otrousuario@email.es
+    domain: prestashop-daw.ddns.net
 
 phpmyadmin:
     user: pma_user
