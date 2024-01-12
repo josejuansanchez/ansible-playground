@@ -27,6 +27,3 @@
         --no-eff-email \
         --non-interactive \
         -d {{ certbot.domain }}
-
-
-  

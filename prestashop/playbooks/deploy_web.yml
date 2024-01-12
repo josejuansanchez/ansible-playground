@@ -62,4 +62,3 @@
       file:
         path: /var/www/html/install
         state: absent
-
