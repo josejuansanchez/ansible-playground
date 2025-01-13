@@ -4,26 +4,32 @@
   become: yes
 
   vars:
-    - db_name: db_name
-    - db_user: db_user
-    - db_password: db_password
+    db:
+      name: db_name
+      user: db_user
+      password: db_password
 
   tasks:
 
     # Para utilizar el módulo mysql_db necesitamos tener instalado el paquete python3-mysqldb
-    - name: Instalamos el gestor de paquetes de Python pip3
-      apt: 
-        name: python3-pip
-        state: present
+    #- name: Instalamos el gestor de paquetes de Python pip3
+    #  apt: 
+    #    name: python3-pip
+    #    state: present
+
+    #- name: Instalamos el módulo de pymysql
+    #  pip:
+    #    name: pymysql
+    #    state: present
 
     - name: Instalamos el módulo de pymysql
-      pip:
+      apt:
         name: pymysql
         state: present
 
     - name: Crear una base de datos
       mysql_db:
-        name: "{{ db_name }}"
+        name: "{{ db.name }}"
         state: present
         login_unix_socket: /var/run/mysqld/mysqld.sock 
 
@@ -31,9 +37,9 @@
     - name: Crear el usuario de la base de datos
       no_log: true
       mysql_user:         
-        name: "{{ db_user }}"
-        password: "{{ db_password }}"
-        priv: "{{ db_name }}.*:ALL"
+        name: "{{ db.user }}"
+        password: "{{ db.password }}"
+        priv: "{{ db.name }}.*:ALL"
         #host: "%"
         state: present
         login_unix_socket: /var/run/mysqld/mysqld.sock 
