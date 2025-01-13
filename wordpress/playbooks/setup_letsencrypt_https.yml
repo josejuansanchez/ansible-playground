@@ -1,0 +1,32 @@
+---
+- name: Playbook para configurar HTTPS
+  hosts: frontend
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Desinstalar instalaciones previas de Certbot
+      apt:
+        name: certbot
+        state: absent
+
+    - name: Instalar Certbot con snap
+      command: snap install --classic certbot
+
+    - name: Crear un alias para el comando certbot
+      command: ln -s -f /snap/bin/certbot /usr/bin/certbot
+
+    - name: Solicitar y configurar certificado SSL/TLS a Let's Encrypt con certbot
+      command:
+        certbot --apache \
+        -m {{ certbot.email }} \
+        --agree-tos \
+        --no-eff-email \
+        --non-interactive \
+        -d {{ certbot.domain }}
+
+
+  

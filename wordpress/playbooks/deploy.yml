@@ -1,0 +1,51 @@
+---
+- name: Playbook para hacer el deploy de la aplicación web WordPress
+  hosts: frontend
+  become: yes
+
+  vars_files:
+    - ../vars/variables.yml
+
+  tasks:
+
+    - name: Descargar la utilidad WP-CLI
+      get_url:
+        url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        dest: /usr/local/bin/wp
+        mode: 0755
+
+    - name: Descargamos el código fuente de WordPress
+      command:
+        wp core download \
+        --locale="{{ wordpress.locale }}" \
+        --path=/var/www/html \
+        --allow-root
+
+    - name: Creamos el archivo wp-config.php
+      command:
+        wp config create \
+        --dbname="{{ db.name }}" \
+        --dbuser="{{ db.user  }}" \
+        --dbpass="{{ db.password }}" \
+        --dbhost="{{ ip.backend }} \
+        --path=/var/www/html \
+        --allow-root
+
+    - name: Instalamos WordPress
+      command:
+      wp core install \
+      --url="{{ certbot.domain }}" \
+      --title="{{ wordpress.title }}" \
+      --admin_user="{{ wordpress.admin_user }}" \
+      --admin_password="{{ wordpress.admin_pass }}" \
+      --admin_email="{{ wordpress.admin_email }}" \
+      --path=/var/www/html \
+      --allow-root  
+        
+    - name: Modificamos los permisos del directorio /var/www/html
+      file:
+        path: /var/www/html
+        owner: www-data
+        group: www-data
+        recurse: yes
+        mode: 0755

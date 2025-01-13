@@ -1,0 +1,19 @@
+ip:
+    frontend: 0.0.0.0        # Reemplazar por la IP del servidor web Apache
+    backend: 0.0.0.0         # Reemplazar por la IP del servidor de MySQL
+
+db:
+    name: wordpress_db
+    user: wordpress_user
+    password: wordpress_password
+
+wordpress:
+    locale: es_ES
+    title: WordPress desplegado con Ansible
+    admin_user: admin
+    admin_pass: admin
+    admin_email: demo@demo.es
+
+certbot:
+    email: otrousuario@email.es
+    domain: prestashop-daw.ddns.net
