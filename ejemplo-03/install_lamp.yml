@@ -27,13 +27,20 @@
           - libapache2-mod-php
         state: present
 
+    - name: Copiar el archivo de configuración de Apache
+      copy:
+        src: apache/000-default.conf
+        dest: /etc/apache2/sites-available/
+
     - name: Reiniciar el servidor web Apache
       service:
         name: apache2
         state: restarted
 
-    - name: Copiar el archivo phpinfo.php
+    - name: Copiar el archivo index.php
       copy:
-        src: php/phpinfo.php
+        src: php/index.php
         dest: /var/www/html/
         mode: 0755
+        owner: www-data
+        group: www-data
