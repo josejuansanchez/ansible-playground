@@ -17,14 +17,9 @@
         name: mysql-server
         state: present
 
-    - name: Instalamos el gestor de paquetes de Python pip3
-      apt: 
-        name: python3-pip
-        state: present
-
     - name: Instalamos el módulo de pymysql
-      pip:
-        name: pymysql
+      apt:
+        name: python3-pymysql
         state: present
 
     - name: Crear una base de datos
