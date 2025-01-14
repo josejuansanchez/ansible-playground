@@ -40,14 +40,9 @@
         group: www-data
         recurse: yes
 
-    - name: Instalar pip3
-      apt:
-        name: python3-pip
-        state: present
-
     - name: Instalar PyMySQL
-      pip:
-        name: pymysql
+      apt:
+        name: python3-pymysql
         state: present
 
     - name: Crear la base de datos para phpMyAdmin

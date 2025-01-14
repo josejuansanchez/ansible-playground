@@ -8,14 +8,9 @@
 
   tasks:
 
-    - name: Instalamos el gestor de paquetes de Python pip3
-      apt: 
-        name: python3-pip
-        state: present
-
     - name: Instalamos el módulo de pymysql
-      pip:
-        name: pymysql
+      apt:
+        name: python3-pymysql
         state: present
 
     - name: Crear una base de datos
@@ -50,19 +45,19 @@
     - name: Editar el nombre de la base de datos en el archivo de configuración
       replace:
         path: /var/www/html/config.php
-        regexp: "lamp_db"
+        regexp: "database_name_here"
         replace: "{{ db.name }}"
 
     - name: Editar el usuario de la base de datos en el archivo de configuración
       replace:
         path: /var/www/html/config.php
-        regexp: "lamp_user"
+        regexp: "username_here"
         replace: "{{ db.user }}"
 
     - name: Editar el password del usuario de la base de datos en el archivo de configuración
       replace:
         path: /var/www/html/config.php
-        regexp: "lamp_password"
+        regexp: "password_here"
         replace: "{{ db.password }}"
 
     - name: Importar la base de datos
