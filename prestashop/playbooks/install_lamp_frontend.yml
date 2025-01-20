@@ -34,25 +34,25 @@
 
     - name: Modificamos el valor max_input_vars de PHP
       replace: 
-        path: /etc/php/8.1/apache2/php.ini
+        path: /etc/php/8.3/apache2/php.ini
         regexp: ;max_input_vars = 1000
         replace: max_input_vars = 5000
 
     - name: Modificamos el valor de memory_limit de PHP
       replace: 
-        path: /etc/php/8.1/apache2/php.ini
+        path: /etc/php/8.3/apache2/php.ini
         regexp: memory_limit = 128M
         replace: memory_limit = 256M
 
     - name: Modificamos el valor de post_max_size de PHP
       replace: 
-        path: /etc/php/8.1/apache2/php.ini
+        path: /etc/php/8.3/apache2/php.ini
         regexp: post_max_size = 8M
         replace: post_max_size = 128M
 
     - name: Modificamos el valor de upload_max_filesize de PHP
       replace:
-        path: /etc/php/8.1/apache2/php.ini
+        path: /etc/php/8.3/apache2/php.ini
         regexp: upload_max_filesize = 2M
         replace: upload_max_filesize = 128M
 
