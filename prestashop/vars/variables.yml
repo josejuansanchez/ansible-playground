@@ -17,8 +17,3 @@ prestashop:
 certbot:
     email: otrousuario@email.es
     domain: prestashop-daw.ddns.net
-
-phpmyadmin:
-    user: pma_user
-    password: pma_password
-    db_name: db_name
